@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/resources :: frgHeaderBase"></th:block>
+    <title>Gestion</title>
+</head>
+
+<body ng-app="usrApp" ng-controller="usrCtrl">
+<div class="container">
+    <th:block th:include="fragments/layout :: frgNavBar"></th:block>
+
+    <div class="container theme-showcase" role="main">
+        <th:block th:include="fragments/layout :: frgAlerts"></th:block>
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <h1><i class="glyphicon glyphicon-road"></i> ParkMe! - Gestion y Registros </h1>
+            <div>
+                <fieldset>
+                    <legend><h1 ng-model="message"></h1></legend>
+                    <form class="form-inline" ng-submit="search()">
+                        <div class="form-group">
+                            <label for="searchWord">Buscador</label>
+                            <input ng-model="searchWord" type="text" class="form-control" id="searchWord"
+                                   placeholder="Ingrese dato a buscar" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectedType">Tipo</label>
+                            <select id="selectedType" ng-model="selectedType" class="form-control"
+                                    ng-options="x.text for x in listSearchType track by x.value">
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-default"><i
+                                class="glyphicon glyphicon-search"></i> Buscar
+                        </button>
+                        <button type="button" ng-show="searchNull" class="btn btn-primary" ng-click="resetForm()" data-toggle="modal"
+                                data-target="#customModal"> Registrar Nuevo usuario <i class="glyphicon glyphicon-plus-sign"></i>
+                        </button>
+                    </form>
+                </fieldset>
+                <hr/>
+                <div ng-show="resultSearch.length != 0">
+                    <table class="table table-responsive">
+                        <tr>
+                            <th>Cedula</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Vehiculos</th>
+                            <th>Registros</th>
+                            <th>Acciones</th>
+                        </tr>
+                        <tr ng-repeat="x in resultSearch">
+                            <td>{{x.cedula}}</td>
+                            <td>{{ x.nombres }}</td>
+                            <td>{{ x.apellidos}}</td>
+                            <td>
+                                <div ng-repeat="y in x.vehiculos">
+                                    <button type="button" class="btn btn-link" ng-click="previewLoadImage(y,x)"
+                                            data-toggle="modal"
+                                            data-target="#previewModal"><i class="glyphicon glyphicon-eye-open"></i>
+                                    </button>
+                                    <label class="label label-default">
+                                        {{ y.tipo.nombre }}
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-show="x.registro" ng-repeat="z in x.registro">
+                                    <label class="label label-default"> Celda:  <big>{{z.celda}}</big> </label>
+                                    <ul>
+
+                                        <li><strong>Ingreso:</strong>
+                                            <button ng-show="!z.ingreso" class="btn btn-info btn-sm"
+                                                    ng-click="registerModal(x)"><i
+                                                    class="glyphicon glyphicon-log-in"></i></button>
+                                            <em ng-show="z.ingreso">{{ dateTimeConversor(z.ingreso) }}</em></li>
+                                        <li><strong>Salida:</strong>
+                                            <button ng-show="!z.salida" class="btn btn-default btn-sm"
+                                                    ng-click="regSalida(z, x.id)"><i
+                                                    class="glyphicon glyphicon-log-out"></i></button>
+                                            <em ng-show="z.salida">{{ dateTimeConversor(z.salida) }}</em></li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-default btn-sm" ng-click="loadData(x)"><i
+                                        class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-info btn-sm" ng-click="registerModal(x)"><i
+                                        class="glyphicon glyphicon-log-in"></i></button>
+                                <button class="btn btn-danger btn-sm" ng-click="removeUsr(x.id)">
+                                    <i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="fragments/modals :: frgModalPreview"></th:block>
+<th:block th:include="fragments/modals :: frgModalRegister"></th:block>
+<th:block th:include="fragments/modals :: frgModalCrud"></th:block>
+
+
+<th:block th:include="fragments/resources :: frgScripts"></th:block>
+</body>
+</html>

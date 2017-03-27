@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/resources :: frgHeaderBase"></th:block>
+
+    <title>Administración</title>
+</head>
+
+<body ng-app="usrApp" ng-controller="repCtrl">
+<div class="container">
+    <th:block th:include="fragments/layout :: frgNavBar"></th:block>
+
+    <div class="container theme-showcase" role="main">
+        <th:block th:include="fragments/layout :: frgAlerts"></th:block>
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <h1><i class="glyphicon glyphicon-road"></i> ParkMe! - Reportes </h1>
+            <div>
+                <fieldset>
+                    <legend><h1 ng-model="message"></h1></legend>
+                    <form class="form-inline" ng-submit="cambiarMes(selectedMonth.id, searchWord)">
+                        <div class="form-group">
+                            <label for="searchWord">Buscador</label>
+                            <input ng-model="searchWord" type="text" class="form-control" id="searchWord"
+                                   placeholder="Filtrar por cedula"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectedType">Tipo</label>
+                            <select id="selectedType" ng-model="selectedMonth" class="form-control"
+                                    ng-options="x.text for x in listMonthsType track by x.id" required="required">
+                                <option value="">-- Escoja</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-default"><i
+                                class="glyphicon glyphicon-search"></i> Buscar
+                        </button>
+                    </form>
+                </fieldset>
+                <hr/>
+                <h2>MES : {{actualMonth}}</h2>
+                <table class="table table-responsive" ng-show="reportViews">
+                    <tr>
+                        <th>Cedula</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Rol</th>
+                        <th>#Días Uso</th>
+                    </tr>
+                    <tr ng-repeat="x in reportViews">
+                        <td>{{ x.cedula }}</td>
+                        <td>{{ x.nombres }}</td>
+                        <td>{{ x.apellidos}}</td>
+                        <td>{{ x.rol}}</td>
+                        <td>{{ x.cantdias}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="fragments/resources :: frgScripts"></th:block>
+</body>
+</html>

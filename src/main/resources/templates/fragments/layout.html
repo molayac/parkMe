@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/resources :: frgHeaderBase"></th:block>
+</head>
+
+<body>
+<!--    <p> A continuación mi trabajo para la prueba tecnica solicitada :); se realizó con:
+                    <br/>
+                <ul>
+                    <li>Spring Boot</li>
+                    <li>Spring MVC</li>
+                    <li>Spring Data JPA</li>
+                    <li>AngularJS</li>
+                    <li>Base de datos SQLITE Embebida</li>
+                </ul>
+                </p>
+            -->
+<th:block th:fragment="frgNavBar">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand"><i class="glyphicon glyphicon-road"></i> <span>ParkMe!</span></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Gestion</a></li>
+                    <li><a href="/reportes">Reportes</a></li>
+                    <li><a href="/acerca">Acerca de...</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+</th:block>
+<th:block th:fragment="frgAlerts">
+    <div id="success-alert" class="alert alert-success" ng-if="successMessage">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> {{successMessage}}
+    </div>
+</th:block>
+
+
+</body>
+</html>
